@@ -33,7 +33,7 @@ function App() {
   };
 
   const handleAddTodo = todo => {
-    setTodos(prevTodos => [...prevTodos, todo]);
+    setTodos(prevTodos => [todo, ...prevTodos]);
   };
 
   const handleTodoChecked = (id, completed) => {
