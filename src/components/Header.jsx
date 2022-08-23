@@ -6,7 +6,7 @@ import '../styles/Header.css';
 
 function Header({ handleAddTodo }) {
   return (
-    <nav className='Header py-3 text-white'>
+    <nav className='Header py-3 text-white mb-1'>
       <div className='container text-center'>
         <div className="d-flex align-items-center justify-content-center">
           <h3 className='py-3 mx-2'>Todo App: React React-Bootstrap</h3>
