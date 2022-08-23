@@ -13,9 +13,15 @@ import reactLogo from './assets/react.svg';
 import './App.css';
 
 function App() {
-
   const [todos, setTodos] = useState([]);
 
+  /*
+    Explanation
+    React 18 double fires useEffect in Strict Mode to assure a correct object lifecycle
+    The useEffect will save an empty array and wipe the local data before loading.
+    To get around that, preventEmptySave is used.
+    Without the preventEmptySave check, the local data will be wiped on every load.
+  */
   const [preventEmptySave, setPreventEmptySave] = useState(true);
 
   const [removeCompletedItemsRef] = useAutoAnimate();

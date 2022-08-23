@@ -2,16 +2,20 @@ import React from 'react';
 
 import CreateTodo from './CreateTodo';
 
+import '../styles/Header.css';
+
 function Header({ handleAddTodo }) {
   return (
-    <div className='Header bg-dark text-bg-dark py-3'>
+    <nav className='Header py-3 text-white'>
       <div className='container text-center'>
-        <h3 className='py-3'>Todo App: React React-Bootstrap</h3>
-        <div className='container text-center w-25'>
-          <CreateTodo handleAddTodo={handleAddTodo} />
+        <div className="d-flex align-items-center justify-content-center">
+          <h3 className='py-3 mx-2'>Todo App: React React-Bootstrap</h3>
+          <button className='btn btn-primary mx-2' data-bs-toggle="collapse" data-bs-target='#create-todo'>Create Todo</button>
         </div>
+
+        <CreateTodo handleAddTodo={handleAddTodo} />
       </div>
-    </div>
+    </nav>
   );
 }
 

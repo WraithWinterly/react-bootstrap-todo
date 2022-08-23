@@ -27,14 +27,18 @@ function CreateTodo({ handleAddTodo }) {
   };
 
   return (
-    <>
-      <button className='btn btn-primary'>Create Todo</button>
-      <form onSubmit={e => handleSubmit(e)}>
-        <label className='form-label my-2' htmlFor={`${id}-name`}>Name</label>
-        <input className='form-control my-2' value={currentText} onChange={e => { setCurrentText(e.target.value); }} type='text' id={`${id}-name`} required></input>
+    <div className="container collapse w-50" id='create-todo'>
+
+      <form className='form-control mt-3' onSubmit={e => handleSubmit(e)}>
+        <div className='form-floating text-start border-primary'>
+          <input className='form-control' value={currentText} onChange={e => { setCurrentText(e.target.value); }} type='text' id={`${id}-name`} placeholder='name' required></input>
+          <label className='form-label' htmlFor={`${id}-name`}>Name</label>
+        </div>
+
         <button className='btn btn-primary my-2'>Submit</button>
       </form>
-    </>
+    </div>
+
   );
 }
 
