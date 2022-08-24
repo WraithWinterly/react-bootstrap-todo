@@ -2,11 +2,6 @@ import React, { useId, useMemo, useState } from 'react';
 
 import { v4 as genUUID4 } from 'uuid';
 
-import Button from 'react-bootstrap/esm/Button';
-import Container from 'react-bootstrap/esm/Container';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
-
 function CreateTodo({ handleAddTodo }) {
   const id = useId();
 
@@ -27,7 +22,7 @@ function CreateTodo({ handleAddTodo }) {
   };
 
   return (
-    <div className="container collapse w-50" id='create-todo'>
+    <div className="container container-sm collapse" id='create-todo'>
 
       <form className='form-control mt-3' onSubmit={e => handleSubmit(e)}>
         <div className='form-floating text-start border-primary'>

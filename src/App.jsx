@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react';
-
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import Header from './components/Header';
-
 import TodoList from './components/TodoList';
 
-import Container from 'react-bootstrap/esm/Container';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-import reactLogo from './assets/react.svg';
 import './App.css';
 
 function App() {
