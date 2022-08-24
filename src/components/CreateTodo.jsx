@@ -26,7 +26,7 @@ function CreateTodo({ handleAddTodo }) {
 
       <form className='form-control mt-3' onSubmit={e => handleSubmit(e)}>
         <div className='form-floating text-start border-primary'>
-          <input className='form-control' value={currentText} onChange={e => { setCurrentText(e.target.value); }} type='text' id={`${id}-name`} placeholder='name' required></input>
+          <input className='form-control' value={currentText} onChange={e => { setCurrentText(e.target.value); }} type='text' id={`${id}-name`} placeholder='name' required autoComplete='off'></input>
           <label className='form-label' htmlFor={`${id}-name`}>Name</label>
         </div>
 

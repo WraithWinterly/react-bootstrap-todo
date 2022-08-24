@@ -2,13 +2,11 @@ import React, { useRef } from 'react';
 
 import CreateTodo from './CreateTodo';
 
-import '../styles/Header.css';
-
 import ReactSVG from '../assets/react.svg';
 
 function Header({ handleAddTodo }) {
   return (
-    <nav className='Header py-3 text-white mb-4'>
+    <nav className='Header py-2 text-white mb-4' style={{ backgroundColor: 'var(--accent-color)' }}>
       <div className='container text-center'>
         <div className="d-flex align-items-center justify-content-center">
           <img className='mb-2' src={ReactSVG} alt="React SVG" />

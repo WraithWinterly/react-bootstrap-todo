@@ -3,9 +3,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import Header from './components/Header';
 import TodoList from './components/TodoList';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import Footer from './components/Footer';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -59,23 +57,13 @@ function App() {
   }, [todos]);
 
   return (
-    <>
-      <Header handleAddTodo={handleAddTodo} />
-      <div className="container w-100 mb-3">
-        <div className="card">
-          <div className="card-header">
-            <h2>Todos</h2>
-          </div>
-          <div className="card-body">
-            <div className='App-remove-completed-tasks-button container text-center' ref={autoAnimate}>
-              {todos.filter(todo => todo.completed).length > 0 &&
-                <button onClick={handleRemoveCompletedTasks} className='btn btn-warning'>Remove Completed Tasks</button>}
-            </div>
-            <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} />
-          </div>
-        </div>
+    <div className='App' style={{ minHeight: '100vh', position: 'relative' }}>
+      <div className='App-body' style={{ paddingBottom: '8.5rem' }}>
+        <Header handleAddTodo={handleAddTodo} />
+        <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} handleRemoveCompletedTasks={handleRemoveCompletedTasks} />
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 
