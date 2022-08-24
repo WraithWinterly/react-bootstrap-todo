@@ -24,7 +24,7 @@ function App() {
   */
   const [preventEmptySave, setPreventEmptySave] = useState(true);
 
-  const [removeCompletedItemsRef] = useAutoAnimate();
+  const [autoAnimate] = useAutoAnimate();
 
   const saveTodos = () => {
     if (todos.length < 1 && preventEmptySave) { return; }
@@ -66,14 +66,20 @@ function App() {
   return (
     <>
       <Header handleAddTodo={handleAddTodo} />
-
-      <div className='App-remove-completed-tasks-button container text-center' ref={removeCompletedItemsRef}>
-        {todos.filter(todo => todo.completed).length > 0 &&
-          <button onClick={handleRemoveCompletedTasks} className='btn btn-warning'>Remove Completed Tasks</button>}
+      <div className="container w-100 mb-3">
+        <div className="card">
+          <div className="card-header">
+            <h2>Todos</h2>
+          </div>
+          <div className="card-body">
+            <div className='App-remove-completed-tasks-button container text-center' ref={autoAnimate}>
+              {todos.filter(todo => todo.completed).length > 0 &&
+                <button onClick={handleRemoveCompletedTasks} className='btn btn-warning'>Remove Completed Tasks</button>}
+            </div>
+            <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} />
+          </div>
+        </div>
       </div>
-
-      <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} />
-
     </>
   );
 }
