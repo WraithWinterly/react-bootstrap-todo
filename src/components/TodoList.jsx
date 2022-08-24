@@ -20,7 +20,7 @@ function TodoList({ todos, handleTodoChecked, handleTodoRemove, handleRemoveComp
           {/* Remove Checked Tasks Button if they are there */}
           <div className='App-remove-completed-tasks-button container text-center' ref={autoAnimateButton}>
             {todos.filter(todo => todo.completed).length > 0 &&
-              <button onClick={handleRemoveCompletedTasks} className='btn btn-warning'>Remove Completed Tasks</button>}
+              <button onClick={handleRemoveCompletedTasks} className='btn btn-warning btn-lg'>Remove Completed Tasks</button>}
           </div>
 
           {/* Todo Item List */}
