@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import Header from './components/Header';
-import TodoList from './components/TodoList';
+import CatList from './components/CatList';
 import Footer from './components/Footer';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [cats, setCats] = useState([]);
 
   /*
     Explanation
@@ -19,48 +19,52 @@ function App() {
 
   const [autoAnimate] = useAutoAnimate();
 
-  const saveTodos = () => {
-    if (todos.length < 1 && preventEmptySave) { return; }
+  const saveCats = () => {
+    if (cats.length < 1 && preventEmptySave) {
+      return;
+    }
     setPreventEmptySave(true);
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem('cats', JSON.stringify(cats));
   };
 
-  const handleAddTodo = todo => {
-    setTodos(prevTodos => [todo, ...prevTodos]);
+  const handleAddCat = (todo) => {
+    setCats((prevTodos) => [todo, ...prevTodos]);
   };
 
-  const handleTodoChecked = (id, completed) => {
-    setTodos(prevTodos => prevTodos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = completed;
-      }
-      return todo;
-    }));
+  const handleEditCat = (id, completed) => {
+    setCats((prevTodos) =>
+      prevTodos.map((todo) => {
+        if (todo.id === id) {
+          todo.completed = completed;
+        }
+        return todo;
+      }),
+    );
   };
 
-  const handleTodoRemove = id => {
+  const handleCatRemove = (id) => {
     setPreventEmptySave(false);
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    setCats((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   const handleRemoveCompletedTasks = () => {
     setPreventEmptySave(false);
-    setTodos(prevTodos => prevTodos.filter(todo => !todo.completed));
+    setCats((prevTodos) => prevTodos.filter((todo) => !todo.completed));
   };
 
   useEffect(() => {
-    setTodos(JSON.parse(localStorage.getItem('todos')) || []);
+    setCats(JSON.parse(localStorage.getItem('cats')) || []);
   }, []);
 
   useEffect(() => {
-    saveTodos();
-  }, [todos]);
+    saveCats();
+  }, [cats]);
 
   return (
     <div className='App' style={{ minHeight: '100vh', position: 'relative' }}>
       <div className='App-body' style={{ paddingBottom: '8.5rem' }}>
-        <Header handleAddTodo={handleAddTodo} />
-        <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} handleRemoveCompletedTasks={handleRemoveCompletedTasks} />
+        <Header handleAddTodo={handleAddCat} />
+        <CatList cats={cats} handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
       </div>
       <Footer />
     </div>
