@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import ReactSVG from '../assets/react.svg';
 
-function Header({ handleAddTodo }) {
+function Header({ handleAddCat }) {
   return (
     <nav className='Header py-2 text-white mb-4' style={{ backgroundColor: 'var(--accent-color)' }}>
       <div className='container text-center'>
@@ -11,8 +11,6 @@ function Header({ handleAddTodo }) {
           <h3 className='py-3 px-2'>The Cats App!</h3>
           <button className='btn btn-primary mx-4'>Create New Cat!</button>
         </div>
-
-        <CreateTodo handleAddTodo={handleAddTodo} />
       </div>
     </nav>
   );

@@ -18,30 +18,16 @@ function CatList({ cats, handleCatEdit, handleCatRemove }) {
           </h2>
         </div>
         <div className='card-body'>
-          {/* Remove Checked Tasks Button if they are there */}
-          <div className='App-remove-completed-tasks-button container text-center' ref={autoAnimateButton}>
-            {cats.filter((todo) => todo.completed).length > 0 && (
-              <button onClick={handleRemoveCompletedTasks} className='btn btn-warning btn-lg'>
-                Remove Completed Tasks
-              </button>
-            )}
-          </div>
-
-          {/* Todo Item List */}
+          {/* Cars Item List */}
           <div className='TodoList' ref={autoAnimateList}>
             {cats.length > 0 ? (
-              cats.map((todo) => (
-                <CatItem
-                  key={todo.id}
-                  todo={todo}
-                  handleTodoChecked={handleTodoChecked}
-                  handleTodoRemove={handleTodoRemove}
-                />
+              cats.map((cat) => (
+                <CatItem key={todo.id} cat={cat} handleCatEdit={handleCatEdit} handlecatRemove={handleCatRemove} />
               ))
             ) : (
               <div className='container d-flex flex-column w-50 text-center justify-content-center'>
                 <h4 className='py-3 rounded-3 text-white' style={{ backgroundColor: 'var(--accent-color)' }}>
-                  All todos are complete!
+                  Let's add a cat now!
                 </h4>
               </div>
             )}
