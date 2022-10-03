@@ -5,12 +5,11 @@ import Header from './components/Header';
 import CatList from './components/CatList';
 import Footer from './components/Footer';
 
-import CreateCat from './components/modals/CreateCat';
-import NameCat from './components/modals/NameCat';
+import CreateCat from './components/CreateCat';
+import NameCat from './components/NameCat';
 
 function App() {
-  const [currentCats, setCurrentCats] = useState([]);
-  const [adoptedCats, setAdoptedCats] = useState([]);
+  const [cats, setCats] = useState([]);
 
   /*
     Explanation
@@ -24,58 +23,56 @@ function App() {
   const [autoAnimate] = useAutoAnimate();
 
   const saveCats = () => {
-    if (currentCats.length < 1 && preventEmptySave) {
+    if (cats.length < 1 && preventEmptySave) {
       return;
     }
     setPreventEmptySave(true);
-    localStorage.setItem('currentCats', JSON.stringify(currentCats));
-    localStorage.setItem('adoptedCats', JSON.stringify(adoptedCats));
+    localStorage.setItem('cats', JSON.stringify(cats));
   };
 
-  const handleCatAdd = (todo) => {
-    setAdoptedCats((prevTodos) => [todo, ...prevTodos]);
+  const handleCatAdd = (cat) => {
+    setAdoptedCats((prevCats) => [cat, ...prevCats]);
   };
 
-  const handleCatEdit = (id, completed) => {
-    setAdoptedCats((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = completed;
+  const handleCatEdit = (id, newName) => {
+    setAdoptedCats((prevCats) =>
+      prevCats.map((cat) => {
+        if (cat.id === id) {
+          cat.name = newName;
         }
-        return todo;
+        return cat;
       }),
     );
   };
 
   const handleCatRemove = (id) => {
     setPreventEmptySave(false);
-    setCurrentCats((cats) => cats.filter((cat) => cat.id !== id));
-    setAdoptedCats((cats) => cats.filter((cat) => cat.id !== id));
+    setCats((cats) => cats.filter((cat) => cat.id !== id));
   };
 
   useEffect(() => {
     const loadData = () => {
-      setCurrentCats(JSON.parse(localStorage.getItem('currentCats')) || []);
-      setAdoptedCats(JSON.parse(localStorage.getItem('adoptedCats')) || []);
+      setCats(JSON.parse(localStorage.getItem('cats')) || []);
     };
     loadData();
   }, []);
 
   useEffect(() => {
     saveCats();
-  }, [currentCats, adoptedCats]);
+  }, [cats]);
 
   return (
     <div className='App' style={{ minHeight: '100vh', position: 'relative' }}>
       <div className='App-body' style={{ paddingBottom: '8.5rem' }}>
         <Header handleCatAdd={handleCatAdd} />
         <div className='d-flex justify-center'>
-          <CatList cats={currentCats} handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
-          <CatList cats={currentCats} handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
+          <CatList cats={cats} title='Your cats' handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
+          <CatList cats={cats} title='For adoption' handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
         </div>
       </div>
 
       <CreateCat />
+      <NameCat />
 
       <Footer />
     </div>
