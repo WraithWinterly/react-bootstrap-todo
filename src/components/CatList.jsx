@@ -20,7 +20,7 @@ function CatList({ title, cats, handleCatEdit, handleCatRemove }) {
           <div className='TodoList' ref={autoAnimateList}>
             {cats.length > 0 ? (
               cats.map((cat) => (
-                <CatItem key={todo.id} cat={cat} handleCatEdit={handleCatEdit} handlecatRemove={handleCatRemove} />
+                <CatItem key={cat.id} cat={cat} handleCatEdit={handleCatEdit} handlecatRemove={handleCatRemove} />
               ))
             ) : (
               <div className='container d-flex flex-column w-50 text-center justify-content-center'>
