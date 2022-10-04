@@ -5,12 +5,16 @@ import Header from './components/Header';
 import CatList from './components/CatList';
 import Footer from './components/Footer';
 
-import CreateCat from './components/CreateCat';
-import NameCat from './components/NameCat';
+import ModalCreateCat from './components/modals/ModalCreateCat';
+import ModalEditCat from './components/modals/ModalEditCat';
+import ModalNameCat from './components/modals/ModalNameCat';
 
 function App() {
   const [cats, setCats] = useState([]);
-
+  const [currentEditCat, setCurrentEditCat] = useState({
+    id: '',
+    name: '',
+  });
   /*
     Explanation
     React 18 double fires useEffect in Strict Mode to assure a correct object lifecycle
@@ -31,23 +35,43 @@ function App() {
   };
 
   const handleCatAdd = (cat) => {
-    setAdoptedCats((prevCats) => [cat, ...prevCats]);
+    const newCat = {
+      id: cat[0].id,
+      url: cat[0].url,
+      name: 'No Name!',
+      adoption: false,
+    };
+    console.log('Add New Cat: ', newCat);
+    setCurrentEditCat(newCat);
+    setCats((prevCats) => [newCat, ...prevCats]);
   };
 
-  const handleCatEdit = (id, newName) => {
-    setAdoptedCats((prevCats) =>
+  const handleCatEditConfirm = (newCat) => {
+    console.log('Edit cat:');
+    console.log(newCat);
+    setCats((prevCats) =>
       prevCats.map((cat) => {
-        if (cat.id === id) {
-          cat.name = newName;
+        if (cat.id === newCat.id) {
+          cat = newCat;
         }
         return cat;
       }),
     );
   };
 
-  const handleCatRemove = (id) => {
+  const handleCatEdit = (cat) => {
+    setCurrentEditCat((prevCat) => ({ ...prevCat, id: '' }));
+    setCurrentEditCat(cat);
+    console.log('Start edit cat: ', cat);
+  };
+
+  const handleCatAdoption = (catToAdopt) => {
     setPreventEmptySave(false);
-    setCats((cats) => cats.filter((cat) => cat.id !== id));
+    setCats((cats) =>
+      cats.map((cat) =>
+        cat.id === catToAdopt.id ? { ...catToAdopt, adoption: true } : cat,
+      ),
+    );
   };
 
   useEffect(() => {
@@ -61,18 +85,81 @@ function App() {
     saveCats();
   }, [cats]);
 
+  const [data, setData] = useState({});
+
+  const generateCat = async () => {
+    try {
+      const response = await fetch('https://api.thecatapi.com/v1/images/search');
+      const data = await response.json();
+      setData(data);
+    } catch (e) {
+      console.log('Failed ', e.message);
+    }
+  };
+
+  const hasData = () => {
+    return Object.keys(data).length !== 0;
+  };
+
+  useEffect(() => {
+    const initialData = async () => {
+      if (!hasData()) {
+        await generateCat();
+      }
+    };
+    initialData();
+  }, []);
+
   return (
     <div className='App' style={{ minHeight: '100vh', position: 'relative' }}>
       <div className='App-body' style={{ paddingBottom: '8.5rem' }}>
-        <Header handleCatAdd={handleCatAdd} />
+        <Header generateCat={generateCat} />
+
+        {/* <!-- Button trigger modal --> */}
+        <button
+          type='button'
+          className='btn btn-primary'
+          data-bs-toggle='modal'
+          data-bs-target='#modalNameCat'>
+          Launch name modal
+        </button>
+
+        {/* <!-- Button edit modal --> */}
+        <button
+          type='button'
+          className='btn btn-primary'
+          data-bs-toggle='modal'
+          data-bs-target='#modalEditCat'>
+          Launch edit modal
+        </button>
+
         <div className='d-flex justify-center'>
-          <CatList cats={cats} title='Your cats' handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
-          <CatList cats={cats} title='For adoption' handleCatEdit={handleCatEdit} handleCatRemove={handleCatRemove} />
+          <CatList
+            cats={cats.filter((cat) => cat.adoption === false)}
+            title='Your cats'
+            handleCatEdit={handleCatEdit}
+          />
+          <CatList
+            cats={cats.filter((cat) => cat.adoption === true)}
+            title='For adoption'
+            handleCatEdit={handleCatEdit}
+          />
         </div>
       </div>
 
-      <CreateCat />
-      <NameCat />
+      <ModalCreateCat
+        data={data}
+        hasData={hasData}
+        generateCat={generateCat}
+        handleCatAdd={handleCatAdd}
+      />
+
+      <ModalEditCat
+        cat={currentEditCat}
+        handleCatEditConfirm={handleCatEditConfirm}
+        handleCatAdoption={handleCatAdoption}
+      />
+      <ModalNameCat cat={currentEditCat} handleCatEditConfirm={handleCatEditConfirm} />
 
       <Footer />
     </div>

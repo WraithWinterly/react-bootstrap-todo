@@ -2,9 +2,11 @@ import React, { useRef } from 'react';
 
 import ReactSVG from '../assets/react.svg';
 
-function Header({ handleAddCat }) {
+function Header({ generateCat }) {
   return (
-    <nav className='Header py-2 text-white mb-4' style={{ backgroundColor: 'var(--accent-color)' }}>
+    <nav
+      className='Header py-2 text-white mb-4'
+      style={{ backgroundColor: 'var(--accent-color)' }}>
       <div className='container text-center'>
         <div className='d-flex align-items-center justify-content-center'>
           <img className='mb-2' src={ReactSVG} alt='React SVG' />
@@ -13,7 +15,8 @@ function Header({ handleAddCat }) {
             type='button'
             className='btn btn-primary mx-4'
             data-bs-toggle='modal'
-            data-bs-target='#createCatModal'>
+            data-bs-target='#modalCreateCat'
+            onClick={generateCat}>
             Create New Cat!
           </button>
         </div>

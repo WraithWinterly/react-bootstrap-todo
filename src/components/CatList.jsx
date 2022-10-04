@@ -4,7 +4,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import CatItem from './CatItem';
 
-function CatList({ title, cats, handleCatEdit, handleCatRemove }) {
+function CatList({ title, cats, handleCatEdit }) {
   const [autoAnimateButton] = useAutoAnimate();
   const [autoAnimateList] = useAutoAnimate();
 
@@ -20,11 +20,13 @@ function CatList({ title, cats, handleCatEdit, handleCatRemove }) {
           <div className='TodoList' ref={autoAnimateList}>
             {cats.length > 0 ? (
               cats.map((cat) => (
-                <CatItem key={cat.id} cat={cat} handleCatEdit={handleCatEdit} handlecatRemove={handleCatRemove} />
+                <CatItem key={cat.id} cat={cat} handleCatEdit={handleCatEdit} />
               ))
             ) : (
               <div className='container d-flex flex-column w-50 text-center justify-content-center'>
-                <h4 className='py-3 rounded-3 text-white' style={{ backgroundColor: 'var(--accent-color)' }}>
+                <h4
+                  className='py-3 rounded-3 text-white'
+                  style={{ backgroundColor: 'var(--accent-color)' }}>
                   Nothing here yet...
                 </h4>
               </div>
