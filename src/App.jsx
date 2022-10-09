@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import Header from './components/Header';
-import CatListMgr from './components/cat-list/CatListMgr';
+import TodoList from './components/TodoList';
 import Footer from './components/Footer';
 
 function App() {
-  const [cats, setCats] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   /*
     Explanation
@@ -19,30 +19,48 @@ function App() {
 
   const [autoAnimate] = useAutoAnimate();
 
-  const saveCats = () => {
-    if (cats.length < 1 && preventEmptySave) {
-      return;
-    }
+  const saveTodos = () => {
+    if (todos.length < 1 && preventEmptySave) { return; }
     setPreventEmptySave(true);
-    localStorage.setItem('cats', JSON.stringify(cats));
+    localStorage.setItem('todos', JSON.stringify(todos));
+  };
+
+  const handleAddTodo = todo => {
+    setTodos(prevTodos => [todo, ...prevTodos]);
+  };
+
+  const handleTodoChecked = (id, completed) => {
+    setTodos(prevTodos => prevTodos.map(todo => {
+      if (todo.id === id) {
+        todo.completed = completed;
+      }
+      return todo;
+    }));
+  };
+
+  const handleTodoRemove = id => {
+    setPreventEmptySave(false);
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+  };
+
+  const handleRemoveCompletedTasks = () => {
+    setPreventEmptySave(false);
+    setTodos(prevTodos => prevTodos.filter(todo => !todo.completed));
   };
 
   useEffect(() => {
-    const loadData = () => {
-      setCats(JSON.parse(localStorage.getItem('cats')) || []);
-    };
-    loadData();
+    setTodos(JSON.parse(localStorage.getItem('todos')) || []);
   }, []);
 
   useEffect(() => {
-    saveCats();
-  }, [cats]);
+    saveTodos();
+  }, [todos]);
 
   return (
     <div className='App' style={{ minHeight: '100vh', position: 'relative' }}>
       <div className='App-body' style={{ paddingBottom: '8.5rem' }}>
-        <Header setCats={setCats} />
-        <CatListMgr cats={cats} setCats={setCats} saveCats={saveCats} />
+        <Header handleAddTodo={handleAddTodo} />
+        <TodoList todos={todos} handleTodoChecked={handleTodoChecked} handleTodoRemove={handleTodoRemove} handleRemoveCompletedTasks={handleRemoveCompletedTasks} />
       </div>
       <Footer />
     </div>

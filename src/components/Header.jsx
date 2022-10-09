@@ -1,19 +1,22 @@
 import React, { useRef } from 'react';
 
-import ReactSVG from '../assets/react.svg';
-import CreateCat from './create-cat/CreateCat';
+import CreateTodo from './CreateTodo';
 
-function Header({ setCats }) {
+import ReactSVG from '../assets/react.svg';
+
+function Header({ handleAddTodo }) {
   return (
-    <nav
-      className='Header py-2 text-white mb-4'
-      style={{ backgroundColor: 'var(--accent-color)' }}>
+    <nav className='Header py-2 text-white mb-4' style={{ backgroundColor: 'var(--accent-color)' }}>
       <div className='container text-center'>
-        <div className='d-flex align-items-center justify-content-center'>
-          <img className='mb-2' src={ReactSVG} alt='React SVG' />
-          <h3 className='py-3 px-2'>The Cats App!</h3>
-          <CreateCat setCats={setCats} />
+        <div className="d-flex align-items-center justify-content-center">
+          <img className='mb-2' src={ReactSVG} alt="React SVG" />
+          <h3 className='py-3 mx-2'>Todo App: React & Bootstrap</h3>
+          <button className='btn btn-primary mx-2' data-bs-toggle="collapse" data-bs-target='#create-todo' onClick={
+            e => e.target.innerText = e.target.getAttribute('aria-expanded') == "true" ? 'Close Menu' : 'Create Todo'}
+          >Create Todo</button>
         </div>
+
+        <CreateTodo handleAddTodo={handleAddTodo} />
       </div>
     </nav>
   );
