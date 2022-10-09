@@ -2,9 +2,11 @@
 Todo App with React and Bootstrap
 Demo the app on https://wraithwinterly.github.io/react-bootstrap-todo/
 
-Todo App built with React, Vite, and Bootstrap. Build in 1 day.
+Todo App built with React, Vite, and Bootstrap. Built in 1 day.
 You can add basic tasks, remove them, compelte them and remove completed tasks.
 This app does not have a backend and is for demonstration purposes only. It is using local browser storage.
+
+Note on commits: this app was going to be converted, however I have decided to make it its own app.
 
 # License
 This project is open source under the [MIT License](https://github.com/WraithWinterly/TasksUltra/blob/main/LICENSE).
