@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 
 import ReactSVG from '../assets/react.svg';
+import CreateCat from './create-cat/CreateCat';
 
-function Header({ generateCat }) {
+function Header({ setCats }) {
   return (
     <nav
       className='Header py-2 text-white mb-4'
@@ -11,14 +12,7 @@ function Header({ generateCat }) {
         <div className='d-flex align-items-center justify-content-center'>
           <img className='mb-2' src={ReactSVG} alt='React SVG' />
           <h3 className='py-3 px-2'>The Cats App!</h3>
-          <button
-            type='button'
-            className='btn btn-primary mx-4'
-            data-bs-toggle='modal'
-            data-bs-target='#modalCreateCat'
-            onClick={generateCat}>
-            Create New Cat!
-          </button>
+          <CreateCat setCats={setCats} />
         </div>
       </div>
     </nav>

@@ -8,45 +8,43 @@ function ModalEditCat({ cat, handleCatEditConfirm, handleCatAdoption }) {
   const nameRef = useRef();
   const [adoptionAttempted, setAdoptionAttempted] = useState(false);
 
-  useEffect(() => {
-    nameRef.current.value = cat.name;
-    setAdoptionAttempted(false);
-  }, [cat]);
-
   return (
     <BSModal
       id='modalEditCat'
-      headerTitle={"Edit Your Cat's Name"}
+      headerTitle={`Edit ${cat?.name}`}
       BodyContent={() => {
         return (
-          <>
-            <input
-              ref={nameRef}
-              type='text'
-              className='form-control'
-              placeholder='Cat Name'
-              aria-label='Cat Name'></input>
-          </>
+          <div className='d-flex flex-column align-items-center gap-4 my-4'>
+            <button
+              type='button'
+              className='btn btn-primary'
+              data-bs-dismiss='modal'
+              data-bs-toggle='modal'
+              data-bs-target='#modalNameCat'>
+              Rename Cat
+            </button>
+            {adoptionAttempted ? (
+              <button
+                className='btn btn-danger'
+                data-bs-dismiss='modal'
+                onClick={() => {
+                  handleCatAdoption(cat);
+                }}>
+                Confirm Adoption
+              </button>
+            ) : (
+              <button
+                className='btn btn-warning'
+                onClick={() => setAdoptionAttempted(true)}>
+                Put for adoption
+              </button>
+            )}
+          </div>
         );
       }}
       FooterContent={() => {
         return (
           <>
-            {adoptionAttempted ? (
-              <button
-                className='btn btn-danger'
-                data-bs-dismiss='modal'
-                onClick={() => handleCatAdoption(cat)}>
-                Confirm Adoption
-              </button>
-            ) : (
-              <button
-                className='btn btn-danger'
-                onClick={() => setAdoptionAttempted(true)}>
-                Put for adoption
-              </button>
-            )}
-
             <button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>
               Cancel Changes
             </button>
@@ -54,13 +52,22 @@ function ModalEditCat({ cat, handleCatEditConfirm, handleCatAdoption }) {
               type='button'
               className='btn btn-success'
               data-bs-dismiss='modal'
-              onClick={() =>
-                handleCatEditConfirm({ ...cat, name: nameRef.current.value })
-              }>
+              onClick={() => {
+                handleCatEditConfirm({ ...cat, name: nameRef.current.value });
+              }}>
               Accept Changes
             </button>
           </>
         );
+      }}
+      onModalShow={() => {
+        setAdoptionAttempted(false);
+        console.log('cat', cat);
+        nameRef.current.value = cat.name;
+        console.log('shown modal', cat);
+      }}
+      onModalHide={() => {
+        console.log('test hide');
       }}
     />
   );

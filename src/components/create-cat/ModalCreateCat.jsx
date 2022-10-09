@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import BSModal from '../BSModal';
 
-function ModalCreateCat({ data, hasData, generateCat, handleCatAdd }) {
+function ModalCreateCat({ gendCatData, generateCat, handleCatAdd }) {
   return (
     <BSModal
       id='modalCreateCat'
@@ -11,9 +11,9 @@ function ModalCreateCat({ data, hasData, generateCat, handleCatAdd }) {
       BodyContent={() => {
         return (
           <>
-            {hasData() && (
+            {gendCatData && (
               <div className='d-flex justify-content-center'>
-                <img src={data[0].url} alt='Cat' className='img-fluid' />
+                <img src={gendCatData.url} alt='Cat' className='img-fluid' />
               </div>
             )}
           </>
@@ -31,11 +31,15 @@ function ModalCreateCat({ data, hasData, generateCat, handleCatAdd }) {
               data-bs-dismiss='modal'
               data-bs-toggle='modal'
               data-bs-target='#modalNameCat'
-              onClick={() => handleCatAdd(data)}>
+              onClick={() => handleCatAdd(gendCatData)}>
               Accept Cat
             </button>
           </>
         );
+      }}
+      onModalShow={() => {
+        console.log('tes');
+        generateCat();
       }}
     />
   );
